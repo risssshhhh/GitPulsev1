@@ -1,4 +1,4 @@
-# GitPulse 🚀
+# GitPulse 
 
 GitPulse is a real-time and batch data platform that ingests GitHub's public event stream (GH Archive hourly dumps), lands it in an S3-compatible Parquet lakehouse, and builds a Type-2 slowly changing dimensional (SCD) warehouse. The pipeline is orchestrated via Apache Airflow, validated with 40+ automated data quality tests, monitored on a Grafana dashboard, and analyzed via a Prophet time-series anomaly detection layer.
 
