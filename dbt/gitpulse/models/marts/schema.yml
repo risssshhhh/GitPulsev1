@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: dim_actor
+    description: Type-1 dimension of actors with consolidated activity telemetry.
+    columns:
+      - name: actor_id
+        description: Unique GitHub actor ID.
+        tests:
+          - unique
+          - not_null
+      - name: actor_login
+        description: GitHub username.
+        tests:
+          - not_null
+
+  - name: dim_repo
+    description: Type-2 slowly changing dimension of GitHub repositories.
+    columns:
+      - name: repo_id
+        description: Natural key for repository.
+        tests:
+          - not_null
+      - name: repo_name
+        description: GitHub repository full name.
+        tests:
+          - not_null
+      - name: is_current
+        description: Boolean flag indicating if this is the active record.
+        tests:
+          - not_null
+
+  - name: dim_date
+    description: Date dimension table.
+    columns:
+      - name: date_id
+        description: Primary key in format YYYY-MM-DD.
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_events
+    description: Central transactions table recording event activity.
+    columns:
+      - name: event_id
+        description: Unique event ID.
+        tests:
+          - unique
+          - not_null
+      - name: event_type
+        description: The type of GitHub event.
+        tests:
+          - not_null
+      - name: actor_id
+        description: Foreign key to actor dimension.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_actor')
+              field: actor_id
+      - name: date_id
+        description: Foreign key to date dimension.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: fct_daily_repo_metrics
+    description: Aggregated repository activity metrics grouped by day.
+    columns:
+      - name: repo_id
+        tests:
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+      - name: total_events
+        tests:
+          - not_null

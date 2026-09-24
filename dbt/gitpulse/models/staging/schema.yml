@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: stg_raw_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: event_type
+        tests:
+          - not_null
+
+  - name: stg_watch_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: repo_id
+        tests:
+          - not_null
+
+  - name: stg_push_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: push_id
+        tests:
+          - not_null
+
+  - name: stg_create_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_fork_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_issues_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: issue_id
+        tests:
+          - not_null
+
+  - name: stg_pull_request_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: pr_id
+        tests:
+          - not_null

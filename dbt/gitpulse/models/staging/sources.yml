@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: github_events
+        description: Raw JSON dumps of GitHub events ingested from GitHub Archive.
+        columns:
+          - name: id
+            description: Unique event ID.
+            tests:
+              - unique
+              - not_null
+          - name: type
+            description: GitHub event type (e.g., PushEvent, WatchEvent).
+            tests:
+              - not_null
+          - name: created_at
+            description: Timestamp when the event was created.
+            tests:
+              - not_null
